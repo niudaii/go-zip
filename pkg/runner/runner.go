@@ -1,11 +1,8 @@
 package runner
 
 import (
-	"context"
 	"fmt"
-	"go-zip/pkg/oss"
 	"go-zip/pkg/pack"
-	"go-zip/pkg/util"
 	"os"
 	"time"
 )
@@ -21,21 +18,16 @@ func NewRunner(options *Options) *Runner {
 	return runner
 }
 
-func (r *Runner) Run(ctx context.Context) {
+func (r *Runner) Run() {
 	start := time.Now()
 	if r.options.List {
-		pack.ListFileType(r.options.SrcFile)
+		pack.ListFileType(r.options.Dir)
 		os.Exit(0)
 	}
-	err := pack.Zip(r.options.SrcFile, r.options.DestZip, r.options.Exclude)
-	if err != nil {
+	if err := pack.Zip(r.options.Dir, r.options.Output, r.options.Exclude); err != nil {
+		fmt.Println(err)
 		os.Exit(1)
 	}
-	fmt.Printf("[INF] Saved: %v\n", r.options.DestZip)
-	if r.options.Upload {
-		objName := util.GetRandomString(6)
-		oss.UploadFile(r.options.DestZip, objName)
-		fmt.Printf("[INF] OSS-Obj: %v\n", objName)
-	}
-	fmt.Printf("[INF] Spent: %v", time.Since(start))
+	fmt.Printf("保存位置: %v\n", r.options.Output)
+	fmt.Printf("运行时间: %v", time.Since(start))
 }

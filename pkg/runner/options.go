@@ -3,24 +3,21 @@ package runner
 import (
 	"flag"
 	"fmt"
-	"os"
 )
 
 type Options struct {
-	SrcFile string
-	DestZip string
+	Dir     string
+	Output  string
 	Exclude string
-	Upload  bool
 	List    bool
 }
 
 func ParseOptions() *Options {
 	options := &Options{}
-	flag.StringVar(&options.SrcFile, "src", "./", "src file")
-	flag.StringVar(&options.DestZip, "dest", "", "dest zip")
+	flag.StringVar(&options.Dir, "dir", "./", "dir to pack")
+	flag.StringVar(&options.Output, "output", "output.zip", "file to write output")
 	flag.BoolVar(&options.List, "list", false, "list file type")
-	flag.StringVar(&options.Exclude, "exclude", ".css,.js", "exclude suffix name")
-	flag.BoolVar(&options.Upload, "upload", false, "upload the file to oss")
+	flag.StringVar(&options.Exclude, "exclude", ".css,.js,.jpg,.jpeg,.png,.gif,.bmp,.tiff,.tif,.psd,.xcf", "exclude suffix name")
 	flag.Parse()
 	showBanner()
 	options.validateOptions()
@@ -28,10 +25,5 @@ func ParseOptions() *Options {
 }
 
 func (options *Options) validateOptions() {
-	if !options.List {
-		if options.DestZip == "" {
-			fmt.Println("please input dest zip")
-			os.Exit(1)
-		}
-	}
+	fmt.Printf("打包路径: %v\n", options.Dir)
 }

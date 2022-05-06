@@ -35,6 +35,9 @@ func Zip(srcFile, destZip, excludeSuffix string) error {
 		if info.IsDir() {
 			header.Name += "/"
 		} else {
+			if info.Name() == destZip {
+				return nil
+			}
 			ext := path.Ext(info.Name())
 			for _, exclude := range excludes {
 				if exclude == ext {
