@@ -14,10 +14,10 @@ type Options struct {
 
 func ParseOptions() *Options {
 	options := &Options{}
-	flag.StringVar(&options.Dir, "dir", "./", "dir to pack")
-	flag.StringVar(&options.Output, "output", "output.zip", "file to write output")
-	flag.BoolVar(&options.List, "list", false, "list file type")
-	flag.StringVar(&options.Exclude, "exclude", ".css,.js,.jpg,.jpeg,.png,.gif,.bmp,.tiff,.tif,.psd,.xcf", "exclude suffix name")
+	flag.StringVar(&options.Dir, "d", "./", "dir to pack")
+	flag.StringVar(&options.Output, "o", "output.zip", "file to write output")
+	flag.BoolVar(&options.List, "l", false, "list file type")
+	flag.StringVar(&options.Exclude, "e", ".css,.js,.jpg,.jpeg,.png,.gif,.bmp", "exclude suffix name")
 	flag.Parse()
 	showBanner()
 	options.validateOptions()
