@@ -6,10 +6,11 @@ import (
 )
 
 type Options struct {
-	Dir     string
-	Output  string
-	Exclude string
-	List    bool
+	Dir      string
+	Output   string
+	BlackExt string
+	WhiteExt string
+	List     bool
 }
 
 func ParseOptions() *Options {
@@ -17,7 +18,8 @@ func ParseOptions() *Options {
 	flag.StringVar(&options.Dir, "d", "./", "dir to pack")
 	flag.StringVar(&options.Output, "o", "output.zip", "file to write output")
 	flag.BoolVar(&options.List, "l", false, "list file type")
-	flag.StringVar(&options.Exclude, "e", ".css,.js,.jpg,.jpeg,.png,.gif,.bmp", "exclude suffix name")
+	flag.StringVar(&options.BlackExt, "black", ".css,.js,.jpg,.jpeg,.png,.gif,.bmp", "black suffix names[.css]")
+	flag.StringVar(&options.WhiteExt, "white", "", "white suffix name, [.php,.go]")
 	flag.Parse()
 	showBanner()
 	options.validateOptions()

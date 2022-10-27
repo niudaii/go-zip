@@ -10,8 +10,9 @@ import (
 )
 
 // srcFile could be a single file or a directory
-func Zip(srcFile, destZip, excludeSuffix string) error {
-	excludes := strings.Split(excludeSuffix, ",")
+func Zip(srcFile, destZip, blackExt, whiteExt string) error {
+	blacks := strings.Split(blackExt, ",")
+	whites := strings.Split(whiteExt, ",")
 	zipfile, err := os.Create(destZip)
 	if err != nil {
 		return err
@@ -39,9 +40,17 @@ func Zip(srcFile, destZip, excludeSuffix string) error {
 				return nil
 			}
 			ext := path.Ext(info.Name())
-			for _, exclude := range excludes {
-				if exclude == ext {
-					return nil
+			if whiteExt != "" {
+				for _, white := range whites {
+					if white != ext {
+						return nil
+					}
+				}
+			} else {
+				for _, black := range blacks {
+					if black == ext {
+						return nil
+					}
 				}
 			}
 			header.Method = zip.Deflate
