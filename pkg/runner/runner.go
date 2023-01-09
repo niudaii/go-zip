@@ -1,9 +1,8 @@
 package runner
 
 import (
-	"fmt"
 	"go-zip/pkg/pack"
-	"os"
+	"log"
 	"time"
 )
 
@@ -22,12 +21,12 @@ func (r *Runner) Run() {
 	start := time.Now()
 	if r.options.List {
 		pack.ListFileType(r.options.Dir)
-		os.Exit(0)
+	} else {
+		err := pack.Zip(r.options.Dir, r.options.Output, r.options.BlackExt, r.options.WhiteExt)
+		if err != nil {
+			log.Println(err)
+		}
+		log.Printf("保存位置: %v\n", r.options.Output)
 	}
-	if err := pack.Zip(r.options.Dir, r.options.Output, r.options.BlackExt, r.options.WhiteExt); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	fmt.Printf("保存位置: %v\n", r.options.Output)
-	fmt.Printf("运行时间: %v\n", time.Since(start))
+	log.Printf("运行时间: %v\n", time.Since(start))
 }

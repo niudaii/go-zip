@@ -6,6 +6,6 @@ import (
 
 func main() {
 	options := runner.ParseOptions()
-	newRunner := runner.NewRunner(options)
-	newRunner.Run()
+	r := runner.NewRunner(options)
+	r.Run()
 }

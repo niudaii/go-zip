@@ -9,7 +9,7 @@ import (
 	"strings"
 )
 
-// srcFile could be a single file or a directory
+// Zip srcFile could be a single file or a directory
 func Zip(srcFile, destZip, blackExt, whiteExt string) error {
 	blacks := strings.Split(blackExt, ",")
 	whites := strings.Split(whiteExt, ",")

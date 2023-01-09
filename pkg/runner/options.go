@@ -2,7 +2,7 @@ package runner
 
 import (
 	"flag"
-	"fmt"
+	"log"
 )
 
 type Options struct {
@@ -27,5 +27,5 @@ func ParseOptions() *Options {
 }
 
 func (options *Options) validateOptions() {
-	fmt.Printf("打包路径: %v\n", options.Dir)
+	log.Printf("打包路径: %v\n", options.Dir)
 }
